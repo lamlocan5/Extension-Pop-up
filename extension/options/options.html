@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Extension Pop-up Powered AI - Options</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Extension Pop-up Powered AI Options</h1>
+    
+    <section>
+      <h2>API Configuration</h2>
+      <div class="form-group">
+        <label for="api-url">API URL:</label>
+        <input type="text" id="api-url" placeholder="https://your-api-domain.com/api/v1">
+      </div>
+    </section>
+    
+    <section>
+      <h2>Default Settings</h2>
+      <div class="form-group">
+        <label for="default-language">Default Target Language:</label>
+        <select id="default-language">
+          <option value="en">English</option>
+          <option value="es">Spanish</option>
+          <option value="fr">French</option>
+          <option value="de">German</option>
+          <option value="it">Italian</option>
+          <option value="ja">Japanese</option>
+          <option value="ko">Korean</option>
+          <option value="zh">Chinese</option>
+        </select>
+      </div>
+    </section>
+    
+    <section>
+      <h2>Account Information</h2>
+      <div id="account-status">
+        <p>You are using the free version. <a href="#" id="upgrade-link">Upgrade to VIP</a> to access premium features.</p>
+      </div>
+    </section>
+    
+    <div class="actions">
+      <button id="save-btn">Save Settings</button>
+      <button id="reset-btn">Reset to Defaults</button>
+    </div>
+  </div>
+  
+  <script src="options.js"></script>
+</body>
+</html>

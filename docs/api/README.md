@@ -1,0 +1,279 @@
+# Extension Pop-up Powered AI API Documentation
+
+This document provides details about the API endpoints available in our backend service.
+
+## Base URL
+
+All API endpoints are served under the base URL: `http://localhost:8000/api/v1/`
+
+## Endpoints
+
+### Translation
+
+- **URL**: `/translation`
+- **Method**: POST
+- **Description**: Translate text to the target language
+- **Request Body**:
+  ```json
+  {
+    "text": "Hello, how are you?",
+    "target_language": "es"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "translated_text": "Hola, ¿cómo estás?",
+    "source_language": "en",
+    "phonetics": "ola, komo estas",
+    "definitions": [
+      {
+        "part_of_speech": "greeting",
+        "definition": "A greeting used when meeting someone"
+      }
+    ]
+  }
+  ```
+
+### Text-to-Speech
+
+- **URL**: `/tts`
+- **Method**: POST
+- **Description**: Convert text to speech
+- **Request Body**:
+  ```json
+  {
+    "text": "Hello, how are you?",
+    "language_code": "en-US",
+    "voice_name": "en-US-Standard-A"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "audio_content": "base64_encoded_audio_data"
+  }
+  ```
+
+### Grammar Check
+
+- **URL**: `/grammar`
+- **Method**: POST
+- **Description**: Check grammar and suggest improvements
+- **Request Body**:
+  ```json
+  {
+    "text": "They is going to the store.",
+    "language": "en-US"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "text": "They is going to the store.",
+    "errors": [
+      {
+        "start": 0,
+        "end": 7,
+        "message": "Subject-verb agreement error",
+        "suggestions": ["They are"]
+      }
+    ],
+    "improved_text": "They are going to the store."
+  }
+  ```
+
+### Flashcards
+
+- **URL**: `/flashcards`
+- **Method**: POST
+- **Description**: Create a new flashcard
+- **Request Body**:
+  ```json
+  {
+    "front": "Hello",
+    "back": "Hola",
+    "context": "Basic greeting",
+    "language": "es"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "id": 1,
+    "front": "Hello",
+    "back": "Hola",
+    "context": "Basic greeting",
+    "language": "es",
+    "created_at": "2023-11-10T12:34:56.789Z"
+  }
+  ```
+
+- **URL**: `/flashcards`
+- **Method**: GET
+- **Description**: Get all flashcards
+- **Response**: Array of flashcard objects
+
+- **URL**: `/flashcards/{flashcard_id}`
+- **Method**: GET
+- **Description**: Get a specific flashcard
+- **Response**: Flashcard object
+
+- **URL**: `/flashcards/{flashcard_id}`
+- **Method**: DELETE
+- **Description**: Delete a flashcard
+- **Response**:
+  ```json
+  {
+    "success": true,
+    "message": "Flashcard deleted successfully"
+  }
+  ```
+
+### Image Search
+
+- **URL**: `/images`
+- **Method**: POST
+- **Description**: Search for images related to the query
+- **Request Body**:
+  ```json
+  {
+    "query": "red apple",
+    "count": 5
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "results": [
+      {
+        "url": "https://example.com/image1.jpg",
+        "thumbnail_url": "https://example.com/thumbnail1.jpg",
+        "alt_text": "Image of red apple - result 1"
+      },
+      ...
+    ]
+  }
+  ```
+
+### Summary
+
+- **URL**: `/summary`
+- **Method**: POST
+- **Description**: Generate a summary of the text
+- **Request Body**:
+  ```json
+  {
+    "text": "Long text to summarize...",
+    "max_length": 200
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "summary": "Summarized text...",
+    "original_length": 1000,
+    "summary_length": 150
+  }
+  ```
+
+## VIP Features
+
+These endpoints require authentication and are only available to premium users.
+
+### Accent Check
+
+- **URL**: `/vip/accent`
+- **Method**: POST
+- **Description**: Check accent pronunciation against reference text
+- **Request Parameters**:
+  - Form data:
+    - `reference_text`: The text that should be spoken
+    - `audio_file`: The audio recording to analyze
+- **Response**:
+  ```json
+  {
+    "overall_score": 0.85,
+    "feedback": {
+      "text": "Hello, how are you?",
+      "score": 0.85,
+      "issues": [
+        "Difficulty with 'th' sound",
+        "Stress pattern on multi-syllable words"
+      ],
+      "suggestions": [
+        "Practice placing tongue between teeth for 'th' sounds",
+        "Emphasize first syllable in compound words"
+      ]
+    }
+  }
+  ```
+
+### Writing Enhancement
+
+- **URL**: `/vip/writing`
+- **Method**: POST
+- **Description**: Enhance writing with suggestions for improvement
+- **Request Body**:
+  ```json
+  {
+    "text": "The text to improve...",
+    "tone": "professional",
+    "target_audience": "general"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "improved_text": "The improved text...",
+    "suggestions": [
+      {
+        "original": "very good",
+        "improved": "excellent",
+        "explanation": "Use more specific and impactful words instead of intensifiers like 'very'."
+      }
+    ],
+    "readability_score": 8.7
+  }
+  ```
+
+### AI Content Detection
+
+- **URL**: `/vip/detection`
+- **Method**: POST
+- **Description**: Detect whether content was generated by AI
+- **Request Body**:
+  ```json
+  {
+    "text": "Text to analyze..."
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "ai_generated_probability": 0.75,
+    "human_generated_probability": 0.25,
+    "assessment": "Likely AI-generated",
+    "confidence": 0.8
+  }
+  ```
+
+### Content Humanization
+
+- **URL**: `/vip/humanize`
+- **Method**: POST
+- **Description**: Make machine-generated content sound more human
+- **Request Body**:
+  ```json
+  {
+    "text": "AI-generated text to humanize...",
+    "style": "conversational"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "humanized_text": "Humanized text that sounds more natural...",
+    "changes_made": 12
+  }
+  ``` 
